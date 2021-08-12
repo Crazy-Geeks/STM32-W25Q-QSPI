@@ -9,6 +9,8 @@
 - Supports *(almost)* all chip commands *(later)*
 - Simple usage with data types wrapper-functions, or use raw 8-bit data
 
+### Documentation is also available in [doxygen](https://crazy-geeks.github.io/STM32-W25Q-QSPI/)
+
 ### Function reference (from .h file):
 ```c
 W25Q_STATE W25Q_Init(void);		// Initalize function
@@ -66,7 +68,6 @@ W25Q_STATE W25Q_BlockReadOnly(u32_t Addr, bool enable);			// Individual block/se
 W25Q_STATE W25Q_BlockReadOnlyCheck(bool *state, u32_t Addr);	// Check block's/sector's read-only lock status
 W25Q_STATE W25Q_GlobalReadOnly(bool enable);		// Set read-only param to all chip
 ```
->### Documentation is also available in doxygen
 
 ### Instructions for use:
 - Use *CubeMX* to configure *QUADSPI* peripheral reffer to your datasheet 
