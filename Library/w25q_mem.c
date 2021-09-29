@@ -3,9 +3,9 @@
  * @file    w25q_mem.c
  * @author  Dmitriy Semenov / Crazy_Geeks
  * @version 0.1b
- * @date	12-August-2021
+ * @date    12-August-2021
  * @brief   Source file for W25Qxxx lib
- * @note 	https://github.com/Crazy-Geeks/STM32-W25Q-QSPI
+ * @note    https://github.com/Crazy-Geeks/STM32-W25Q-QSPI
  *******************************************
  *
  * @note https://ru.mouser.com/datasheet/2/949/w25q256jv_spi_revg_08032017-1489574.pdf
@@ -713,7 +713,7 @@ W25Q_STATE W25Q_ProgramLong(u32_t buf, u8_t pageShift, u32_t pageNum) {
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_ProgramData(u8_t *buf, u16_t len, u8_t pageShift, u32_t pageNum) {
-	if (pageNum >= PAGE_COUNT || len == 0 || len > 256 || pageShift > 255 - len
+	if (pageNum >= PAGE_COUNT || len == 0 || len > 256 || pageShift > 256 - len
 			|| (pageShift > 0 && pageNum >= PAGE_COUNT - 1))
 		return W25Q_PARAM_ERR;
 	u32_t rawAddr = page_to_addr(pageNum, pageShift);
