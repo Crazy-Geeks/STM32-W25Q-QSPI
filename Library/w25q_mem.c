@@ -42,8 +42,8 @@ W25Q_STATUS_REG w25q_status; 		///< Internal status structure instance
  * @brief Internal lib's functions
  * @{
  */
-W25Q_STATE W25Q_WriteEnable(bool enable); 		///< Toggle WOL bit
-W25Q_STATE W25Q_EnableQSPI(bool enable);		///< Toggle QE bit
+W25Q_STATE W25Q_WriteEnable(bool enable); 	///< Toggle WOL bit
+W25Q_STATE W25Q_EnableQSPI(bool enable);	///< Toggle QE bit
 W25Q_STATE W25Q_Enter4ByteMode(bool enable); 	///< Toggle ADS bit
 W25Q_STATE W25Q_SetExtendedAddr(u8_t Addr);  	///< Set addr in 3-byte mode
 W25Q_STATE W25Q_GetExtendedAddr(u8_t *outAddr); ///< Get addr in 3-byte mode
@@ -856,7 +856,7 @@ W25Q_STATE W25Q_EraseSector(u32_t SectAddr) {
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_EraseBlock(u32_t BlockAddr, u8_t size) {
-	if (size != 32 || size != 64)
+	if (size != 32 && size != 64)
 		return W25Q_PARAM_ERR;
 	if ((size == 64 && BlockAddr >= BLOCK_COUNT)
 			|| (size == 32 && BlockAddr >= BLOCK_COUNT * 2))
