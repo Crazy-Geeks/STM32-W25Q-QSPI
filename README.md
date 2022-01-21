@@ -27,15 +27,15 @@ W25Q_STATE W25Q_ReadWord(u16_t *buf, u8_t pageShift, u32_t pageNum);	// Read 16-
 W25Q_STATE W25Q_ReadSLong(i32_t *buf, u8_t pageShift, u32_t pageNum);	// Read signed 32-bit variable
 W25Q_STATE W25Q_ReadLong(u32_t *buf, u8_t pageShift, u32_t pageNum);	// Read 32-bit variable
 W25Q_STATE W25Q_ReadData(u8_t *buf, u16_t len, u8_t pageShift, u32_t pageNum);  // Read any 8-bit data
-W25Q_STATE W25Q_ReadRaw(u8_t *buf, u16_t data_len, u32_t rawAddr);		// Read data from raw addr
-W25Q_STATE W25Q_SingleRead(u8_t *buf, u32_t len, u32_t Addr);					// Read data from raw addr by single line
+W25Q_STATE W25Q_ReadRaw(u8_t *buf, u16_t data_len, u32_t rawAddr);  // Read data from raw addr
+W25Q_STATE W25Q_SingleRead(u8_t *buf, u32_t len, u32_t Addr);	 // Read data from raw addr by single line
 
-W25Q_STATE W25Q_EraseSector(u32_t SectAddr);			// Erase 4KB Sector
+W25Q_STATE W25Q_EraseSector(u32_t SectAddr);  // Erase 4KB Sector
 W25Q_STATE W25Q_EraseBlock(u32_t BlockAddr, u8_t size); // Erase 32KB/64KB Sector
-W25Q_STATE W25Q_EraseChip(void);						// Erase all chip
+W25Q_STATE W25Q_EraseChip(void);  // Erase all chip
 
 W25Q_STATE W25Q_ProgramSByte(i8_t buf, u8_t pageShift, u32_t pageNum);	// Program signed 8-bit variable
-W25Q_STATE W25Q_ProgramByte(u8_t buf, u8_t pageShift, u32_t pageNum);		// Program 8-bit variable
+W25Q_STATE W25Q_ProgramByte(u8_t buf, u8_t pageShift, u32_t pageNum);  // Program 8-bit variable
 W25Q_STATE W25Q_ProgramSWord(i16_t buf, u8_t pageShift, u32_t pageNum);	// Program signed 16-bit variable
 W25Q_STATE W25Q_ProgramWord(u16_t buf, u8_t pageShift, u32_t pageNum);	// Program 16-bit variable
 W25Q_STATE W25Q_ProgramSLong(i32_t buf, u8_t pageShift, u32_t pageNum);	// Program signed 32-bit variable
@@ -44,7 +44,7 @@ W25Q_STATE W25Q_ProgramData(u8_t *buf, u16_t len, u8_t pageShift, u32_t pageNum)
 W25Q_STATE W25Q_ProgramRaw(u8_t *buf, u16_t data_len, u32_t rawAddr); 	// Program data to raw addr
 
 W25Q_STATE W25Q_ProgSuspend(void); // Pause Programm/Erase operation
-W25Q_STATE W25Q_ProgResume(void);	 // Resume Programm/Erase operation
+W25Q_STATE W25Q_ProgResume(void); // Resume Programm/Erase operation
 
 W25Q_STATE W25Q_Sleep(void);	// Set low current consumption
 W25Q_STATE W25Q_WakeUP(void);	// Wake the chip up from sleep mode
@@ -55,16 +55,16 @@ W25Q_STATE W25Q_SwReset(bool force);	// Software reset
 ```
 ### Functions that aren't yet ready:
 ```c
-W25Q_STATE W25Q_EnableVolatileSR(void);			 // Make Status Register Volatile
+W25Q_STATE W25Q_EnableVolatileSR(void);  // Make Status Register Volatile
 W25Q_STATE W25Q_SetBurstWrap(u8_t WrapSize); // Set Burst with Wrap
-W25Q_STATE W25Q_ReadFullID(u8_t *buf);			 // Read full chip ID (Manufacturer ID + Device ID)
-W25Q_STATE W25Q_ReadUID(u8_t *buf);				   // Read unique chip ID
-W25Q_STATE W25Q_ReadJEDECID(u8_t *buf); 		 // Read ID by JEDEC Standards
+W25Q_STATE W25Q_ReadFullID(u8_t *buf);  // Read full chip ID (Manufacturer ID + Device ID)
+W25Q_STATE W25Q_ReadUID(u8_t *buf);     // Read unique chip ID
+W25Q_STATE W25Q_ReadJEDECID(u8_t *buf); // Read ID by JEDEC Standards
 W25Q_STATE W25Q_ReadSFDPRegister(u8_t *buf); // Read device descriptor (SFDP Standard)
 W25Q_STATE W25Q_EraseSecurityRegisters(u8_t numReg);	// Erase security register
 W25Q_STATE W25Q_ProgSecurityRegisters(u8_t *buf, u8_t numReg, u8_t byteAddr);	// Program security register
 W25Q_STATE W25Q_ReadSecurityRegisters(u8_t *buf, u8_t numReg, u8_t byteAddr);	// Read security register
-W25Q_STATE W25Q_BlockReadOnly(u32_t Addr, bool enable);			  // Individual block/sector read-only lock
+W25Q_STATE W25Q_BlockReadOnly(u32_t Addr, bool enable);   // Individual block/sector read-only lock
 W25Q_STATE W25Q_BlockReadOnlyCheck(bool *state, u32_t Addr);  // Check block's/sector's read-only lock status
 W25Q_STATE W25Q_GlobalReadOnly(bool enable);		// Set read-only param to all chip
 ```
