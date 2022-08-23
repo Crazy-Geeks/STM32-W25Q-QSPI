@@ -325,12 +325,12 @@ W25Q_STATE W25Q_IsBusy(void) {
  * Read signed 8-bit byte variable
  *
  * @param[out] buf Data to be read (single)
- * @param[in] pageShift Byte shift inside page (0..254)
- * @param[in] pageNum Page number (0..PAGE_COUNT)
+ * @param[in] pageShift Byte shift inside page (0..255)
+ * @param[in] pageNum Page number (0..PAGE_COUNT-1)
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_ReadSByte(i8_t *buf, u8_t pageShift, u32_t pageNum) {
-	if (pageNum >= PAGE_COUNT || (pageShift > 0 && pageNum >= PAGE_COUNT - 1))
+	if (pageNum >= PAGE_COUNT)
 		return W25Q_PARAM_ERR;
 	u32_t rawAddr = page_to_addr(pageNum, pageShift);
 	u8_t data;
@@ -346,12 +346,12 @@ W25Q_STATE W25Q_ReadSByte(i8_t *buf, u8_t pageShift, u32_t pageNum) {
  * Read unsigned 8-bit byte variable
  *
  * @param[out] buf Data to be read (single)
- * @param[in] pageShift Byte shift inside page (0..254)
- * @param[in] pageNum Page number (0..PAGE_COUNT)
+ * @param[in] pageShift Byte shift inside page (0..255)
+ * @param[in] pageNum Page number (0..PAGE_COUNT-1)
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_ReadByte(u8_t *buf, u8_t pageShift, u32_t pageNum) {
-	if (pageNum >= PAGE_COUNT || (pageShift > 0 && pageNum >= PAGE_COUNT - 1))
+	if (pageNum >= PAGE_COUNT)
 		return W25Q_PARAM_ERR;
 	u32_t rawAddr = page_to_addr(pageNum, pageShift);
 	u8_t data;
@@ -367,13 +367,12 @@ W25Q_STATE W25Q_ReadByte(u8_t *buf, u8_t pageShift, u32_t pageNum) {
  * Read signed 16-bit word variable
  *
  * @param[out] buf Data to be read (single)
- * @param[in] pageShift Byte shift inside page (0..253)
- * @param[in] pageNum Page number (0..PAGE_COUNT)
+ * @param[in] pageShift Byte shift inside page (0..254)
+ * @param[in] pageNum Page number (0..PAGE_COUNT-1)
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_ReadSWord(i16_t *buf, u8_t pageShift, u32_t pageNum) {
-	if (pageNum >= PAGE_COUNT || pageShift == 255 - 2
-			|| (pageShift > 0 && pageNum >= PAGE_COUNT - 1))
+	if (pageNum >= PAGE_COUNT || pageShift > 256 - 2)
 		return W25Q_PARAM_ERR;
 	u32_t rawAddr = page_to_addr(pageNum, pageShift);
 	u8_t data[2];
@@ -389,13 +388,12 @@ W25Q_STATE W25Q_ReadSWord(i16_t *buf, u8_t pageShift, u32_t pageNum) {
  * Read unsigned 16-bit word variable
  *
  * @param[out] buf Data to be read (single)
- * @param[in] pageShift Byte shift inside page (0..253)
- * @param[in] pageNum Page number (0..PAGE_COUNT)
+ * @param[in] pageShift Byte shift inside page (0..254)
+ * @param[in] pageNum Page number (0..PAGE_COUNT-1)
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_ReadWord(u16_t *buf, u8_t pageShift, u32_t pageNum) {
-	if (pageNum >= PAGE_COUNT || pageShift == 255 - 2
-			|| (pageShift > 0 && pageNum >= PAGE_COUNT - 1))
+	if (pageNum >= PAGE_COUNT || pageShift > 256 - 2)
 		return W25Q_PARAM_ERR;
 	u32_t rawAddr = page_to_addr(pageNum, pageShift);
 	u8_t data[2];
@@ -411,13 +409,12 @@ W25Q_STATE W25Q_ReadWord(u16_t *buf, u8_t pageShift, u32_t pageNum) {
  * Read signed 32-bit long variable
  *
  * @param[out] buf Data to be read (single)
- * @param[in] pageShift Byte shift inside page (0..251)
- * @param[in] pageNum Page number (0..PAGE_COUNT)
+ * @param[in] pageShift Byte shift inside page (0..252)
+ * @param[in] pageNum Page number (0..PAGE_COUNT-1)
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_ReadSLong(i32_t *buf, u8_t pageShift, u32_t pageNum) {
-	if (pageNum >= PAGE_COUNT || pageShift > 255 - 4
-			|| (pageShift > 0 && pageNum >= PAGE_COUNT - 1))
+	if (pageNum >= PAGE_COUNT || pageShift > 256 - 4)
 		return W25Q_PARAM_ERR;
 	u32_t rawAddr = page_to_addr(pageNum, pageShift);
 	u8_t data[4];
@@ -433,13 +430,12 @@ W25Q_STATE W25Q_ReadSLong(i32_t *buf, u8_t pageShift, u32_t pageNum) {
  * Read signed 32-bit long variable
  *
  * @param[out] buf Data to be read (single)
- * @param[in] pageShift Byte shift inside page (0..251)
- * @param[in] pageNum Page number (0..PAGE_COUNT)
+ * @param[in] pageShift Byte shift inside page (0..252)
+ * @param[in] pageNum Page number (0..PAGE_COUNT-1)
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_ReadLong(u32_t *buf, u8_t pageShift, u32_t pageNum) {
-	if (pageNum >= PAGE_COUNT || pageShift > 255 - 4
-			|| (pageShift > 0 && pageNum >= PAGE_COUNT - 1))
+	if (pageNum >= PAGE_COUNT || pageShift > 256 - 4)
 		return W25Q_PARAM_ERR;
 	u32_t rawAddr = page_to_addr(pageNum, pageShift);
 	u8_t data[4];
@@ -457,13 +453,12 @@ W25Q_STATE W25Q_ReadLong(u32_t *buf, u8_t pageShift, u32_t pageNum) {
  * @note Use memcpy to decode data
  * @param[out] buf Pointer to data to be read (single or array)
  * @param[in] len Length of data (1..256)
- * @param[in] pageShift Byte shift inside page (0..255 - len)
- * @param[in] pageNum Page number (0..PAGE_COUNT)
+ * @param[in] pageShift Byte shift inside page (0..256 - len)
+ * @param[in] pageNum Page number (0..PAGE_COUNT-1)
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_ReadData(u8_t *buf, u16_t len, u8_t pageShift, u32_t pageNum) {
-	if (pageNum >= PAGE_COUNT || len == 0 || len > 256 || pageShift > 255 - len
-			|| (pageShift > 0 && pageNum >= PAGE_COUNT - 1))
+	if (pageNum >= PAGE_COUNT || len == 0 || len > 256 || pageShift > 256 - len)
 		return W25Q_PARAM_ERR;
 	u32_t rawAddr = page_to_addr(pageNum, pageShift);
 	return W25Q_ReadRaw(buf, len, rawAddr);
@@ -594,12 +589,12 @@ W25Q_STATE W25Q_SetBurstWrap(u8_t WrapSize) {
  * Program signed 8-bit byte variable
  *
  * @param[in] buf Data to be written (single)
- * @param[in] pageShift Byte shift inside page (0..254)
- * @param[in] pageNum Page number (0..PAGE_COUNT)
+ * @param[in] pageShift Byte shift inside page (0..255)
+ * @param[in] pageNum Page number (0..PAGE_COUNT-1)
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_ProgramSByte(i8_t buf, u8_t pageShift, u32_t pageNum) {
-	if (pageNum >= PAGE_COUNT || (pageShift > 0 && pageNum >= PAGE_COUNT - 1))
+	if (pageNum >= PAGE_COUNT)
 		return W25Q_PARAM_ERR;
 	u32_t rawAddr = page_to_addr(pageNum, pageShift);
 	u8_t data;
@@ -612,12 +607,12 @@ W25Q_STATE W25Q_ProgramSByte(i8_t buf, u8_t pageShift, u32_t pageNum) {
  * Program unsigned 8-bit byte vairable
  *
  * @param[in] buf Data to be written (single)
- * @param[in] pageShift Byte shift inside page (0..254)
- * @param[in] pageNum Page number (0..PAGE_COUNT)
+ * @param[in] pageShift Byte shift inside page (0..255)
+ * @param[in] pageNum Page number (0..PAGE_COUNT-1)
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_ProgramByte(u8_t buf, u8_t pageShift, u32_t pageNum) {
-	if (pageNum >= PAGE_COUNT || (pageShift > 0 && pageNum >= PAGE_COUNT - 1))
+	if (pageNum >= PAGE_COUNT)
 		return W25Q_PARAM_ERR;
 	u32_t rawAddr = page_to_addr(pageNum, pageShift);
 	u8_t data;
@@ -630,13 +625,12 @@ W25Q_STATE W25Q_ProgramByte(u8_t buf, u8_t pageShift, u32_t pageNum) {
  * Program signed 16-bit word vairable
  *
  * @param[in] buf Data to be written (single)
- * @param[in] pageShift Byte shift inside page (0..253)
- * @param[in] pageNum Page number (0..PAGE_COUNT)
+ * @param[in] pageShift Byte shift inside page (0..254)
+ * @param[in] pageNum Page number (0..PAGE_COUNT-1)
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_ProgramSWord(i16_t buf, u8_t pageShift, u32_t pageNum) {
-	if (pageNum >= PAGE_COUNT || pageShift == 255 - 2
-			|| (pageShift > 0 && pageNum >= PAGE_COUNT - 1))
+	if (pageNum >= PAGE_COUNT || pageShift > 256 - 2)
 		return W25Q_PARAM_ERR;
 	u32_t rawAddr = page_to_addr(pageNum, pageShift);
 	u8_t data[2];
@@ -649,13 +643,12 @@ W25Q_STATE W25Q_ProgramSWord(i16_t buf, u8_t pageShift, u32_t pageNum) {
  * Program unsigned 16-bit word vairable
  *
  * @param[in] buf Data to be written (single)
- * @param[in] pageShift Byte shift inside page (0..253)
- * @param[in] pageNum Page number (0..PAGE_COUNT)
+ * @param[in] pageShift Byte shift inside page (0..254)
+ * @param[in] pageNum Page number (0..PAGE_COUNT-1)
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_ProgramWord(u16_t buf, u8_t pageShift, u32_t pageNum) {
-	if (pageNum >= PAGE_COUNT || pageShift > 255 - 2
-			|| (pageShift > 0 && pageNum >= PAGE_COUNT - 1))
+	if (pageNum >= PAGE_COUNT || pageShift > 256 - 2)
 		return W25Q_PARAM_ERR;
 	u32_t rawAddr = page_to_addr(pageNum, pageShift);
 	u8_t data[2];
@@ -668,13 +661,12 @@ W25Q_STATE W25Q_ProgramWord(u16_t buf, u8_t pageShift, u32_t pageNum) {
  * Program signed 32-bit long vairable
  *
  * @param[in] buf Data to be written (single)
- * @param[in] pageShift Byte shift inside page (0..251)
- * @param[in] pageNum Page number (0..PAGE_COUNT)
+ * @param[in] pageShift Byte shift inside page (0..252)
+ * @param[in] pageNum Page number (0..PAGE_COUNT-1)
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_ProgramSLong(i32_t buf, u8_t pageShift, u32_t pageNum) {
-	if (pageNum >= PAGE_COUNT || pageShift > 255 - 4
-			|| (pageShift > 0 && pageNum >= PAGE_COUNT - 1))
+	if (pageNum >= PAGE_COUNT || pageShift > 256 - 4)
 		return W25Q_PARAM_ERR;
 	u32_t rawAddr = page_to_addr(pageNum, pageShift);
 	u8_t data[4];
@@ -687,13 +679,12 @@ W25Q_STATE W25Q_ProgramSLong(i32_t buf, u8_t pageShift, u32_t pageNum) {
  * Program unsigned 32-bit long vairable
  *
  * @param[in] buf Data to be written (single)
- * @param[in] pageShift Byte shift inside page (0..251)
- * @param[in] pageNum Page number (0..PAGE_COUNT)
+ * @param[in] pageShift Byte shift inside page (0..252)
+ * @param[in] pageNum Page number (0..PAGE_COUNT-1)
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_ProgramLong(u32_t buf, u8_t pageShift, u32_t pageNum) {
-	if (pageNum >= PAGE_COUNT || pageShift > 255 - 4
-			|| (pageShift > 0 && pageNum >= PAGE_COUNT - 1))
+	if (pageNum >= PAGE_COUNT || pageShift > 256 - 4)
 		return W25Q_PARAM_ERR;
 	u32_t rawAddr = page_to_addr(pageNum, pageShift);
 	u8_t data[4];
@@ -708,13 +699,12 @@ W25Q_STATE W25Q_ProgramLong(u32_t buf, u8_t pageShift, u32_t pageNum) {
  * @note Use memcpy to prepare data
  * @param[in] buf Pointer to data to be written (single or array)
  * @param[in] len Length of data (1..256)
- * @param[in] pageShift Byte shift inside page (0..255 - len)
- * @param[in] pageNum Page number (0..PAGE_COUNT)
+ * @param[in] pageShift Byte shift inside page (0..256 - len)
+ * @param[in] pageNum Page number (0..PAGE_COUNT-1)
  * @return W25Q_STATE enum
  */
 W25Q_STATE W25Q_ProgramData(u8_t *buf, u16_t len, u8_t pageShift, u32_t pageNum) {
-	if (pageNum >= PAGE_COUNT || len == 0 || len > 256 || pageShift > 256 - len
-			|| (pageShift > 0 && pageNum >= PAGE_COUNT - 1))
+	if (pageNum >= PAGE_COUNT || len == 0 || len > 256 || pageShift > 256 - len)
 		return W25Q_PARAM_ERR;
 	u32_t rawAddr = page_to_addr(pageNum, pageShift);
 	return W25Q_ProgramRaw(buf, len, rawAddr);
