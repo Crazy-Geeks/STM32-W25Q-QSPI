@@ -280,15 +280,15 @@ W25Q_STATE W25Q_ReadStatusStruct(W25Q_STATUS_REG *status) {
 	state = W25Q_ReadStatusReg(&SRs[2], 3);
 	if (state != W25Q_OK)
 		return state;
-
-	status->BUSY = w25q_status.BUSY = SRs[0] & 0b1;
-	status->WEL = w25q_status.WEL = (SRs[0] >> 1) & 0b1;
-	status->QE = w25q_status.QE = (SRs[1] >> 1) & 0b1;
-	status->SUS = w25q_status.SUS = (SRs[1] >> 7) & 0b1;
-	status->ADS = w25q_status.ADS = SRs[2] & 0b1;
-	status->ADP = w25q_status.ADP = (SRs[2] >> 1) & 0b1;
-
-	status->SLEEP = w25q_status.SLEEP; // возможно нужно вынести в начало (тестить)
+	if(status){
+		status->BUSY = w25q_status.BUSY = SRs[0] & 0b1;
+		status->WEL = w25q_status.WEL = (SRs[0] >> 1) & 0b1;
+		status->QE = w25q_status.QE = (SRs[1] >> 1) & 0b1;
+		status->SUS = w25q_status.SUS = (SRs[1] >> 7) & 0b1;
+		status->ADS = w25q_status.ADS = SRs[2] & 0b1;
+		status->ADP = w25q_status.ADP = (SRs[2] >> 1) & 0b1;
+		status->SLEEP = w25q_status.SLEEP; // возможно нужно вынести в начало (тестить)
+	}
 
 	return state;
 }
